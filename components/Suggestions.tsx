@@ -1,6 +1,7 @@
+import type { SuggestionsTypes } from "../types/components/Suggestions.types";
+
 import faker from "@faker-js/faker";
 import { useEffect, useState } from "react";
-import { SuggestionsTypes } from "../types/components/Suggestions.types";
 
 
 const Suggestions = () => {

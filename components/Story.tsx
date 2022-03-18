@@ -1,6 +1,6 @@
-import Image from "next/image";
-
 import type { StoryPropsTypes } from "../types/components/Story.types";
+
+import Image from "next/image";
 
 
 const Story = ({ img, username }: StoryPropsTypes) => {

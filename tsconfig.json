@@ -23,7 +23,10 @@
       "next-env.d.ts",
       "**/*.ts",
       "**/*.tsx",
-      "pages/api/auth/[...nextauth].js"
+      "pages/api/auth/[...nextauth].js",
+      "firebase.js",
+      "pages/auth/signin.tsx",
+      "types/components/Post.types.js"
    ],
    "exclude": [
       "node_modules"

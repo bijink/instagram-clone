@@ -1,3 +1,3 @@
-import { FakerDataTypes } from "../global.types";
+import { FakerDataTypes } from "../globals.types";
 
 export type SuggestionsTypes = FakerDataTypes;
