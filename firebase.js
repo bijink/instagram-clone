@@ -7,7 +7,7 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-   apiKey: "AIzaSyDZ-vk7DasxiXPUh8zOYvd0NNg88UWy4BQ",
+   apiKey: process.env.FIREBASE_API,
    authDomain: "insta-clone-app-41f98.firebaseapp.com",
    projectId: "insta-clone-app-41f98",
    storageBucket: "insta-clone-app-41f98.appspot.com",
