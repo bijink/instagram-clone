@@ -1,19 +1,21 @@
-import type { SuggestionsTypes } from "../types/components/Suggestions.types";
+import type { SuggestionDataTypes } from "../types/components/Suggestions.types";
 
 import faker from "@faker-js/faker";
 import { useEffect, useState } from "react";
 
 
 const Suggestions = () => {
-   const [suggestions, setSuggestions] = useState([] as SuggestionsTypes[]);
+   const [suggestionData, setSuggestionData] = useState([] as SuggestionDataTypes[]);
+
 
    useEffect(() => {
-      const suggestions: SuggestionsTypes[] = [...Array(5)].map((_, i) => ({
+      const suggestionData = [...Array(5)].map((_, i) => ({
          ...faker.helpers.contextualCard(),
          id: i,
       }));
-      setSuggestions(suggestions);
+      setSuggestionData(suggestionData);
    }, []);
+
 
    return (
       <div className="mt-4 ml-10" >
@@ -21,7 +23,7 @@ const Suggestions = () => {
             <h3 className="text-sm font-bold text-gray-400" >Suggestion for you</h3>
             <button className="text-gray-600 font-semibold">See All</button>
          </div>
-         {suggestions.map(profile => (
+         {suggestionData.map(profile => (
             <div key={profile.id} className="flex items-center justify-between mt-3" >
                <img
                   src={profile.avatar}

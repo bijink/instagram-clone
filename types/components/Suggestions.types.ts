@@ -1,3 +1,3 @@
 import { FakerDataTypes } from "../globals.types";
 
-export type SuggestionsTypes = FakerDataTypes;
+export type SuggestionDataTypes = FakerDataTypes;

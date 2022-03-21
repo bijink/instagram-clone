@@ -1,4 +1,4 @@
-export interface StoryPropsTypes {
+export interface PropsTypes {
    img: string,
    username: string;
 }

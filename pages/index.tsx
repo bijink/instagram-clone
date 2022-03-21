@@ -10,13 +10,11 @@ const Home: NextPage = () => {
    return (
       <div className="bg-gray-50 h-screen overflow-y-scroll">
          <Head>
-            <title>Instagram</title>
-            <link rel="icon" href="/favicon.ico" />
+            <title>Instagram Clone</title>
+            <link rel="icon" href="/instagram-logo_page.webp" />
          </Head>
-
          <Header />
          <Feed />
-
          <Modal />
       </div>
    );

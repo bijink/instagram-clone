@@ -8,4 +8,4 @@ export interface GoogleProviderTypes {
          type: string,
       };
    };
-}
+};

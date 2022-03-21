@@ -1,4 +1,4 @@
-import type { PostPropsTypes } from "../types/components/Post.types";
+import type { CommentsComment, PropsTypes } from "../types/components/Post.types";
 
 import {
    BookmarkIcon,
@@ -8,23 +8,20 @@ import {
    HeartIcon,
    PaperAirplaneIcon,
 } from '@heroicons/react/outline';
-import {
-   HeartIcon as HeartIconFilled
-} from '@heroicons/react/solid';
+import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc } from "firebase/firestore";
+import { SyntheticEvent, useEffect, useState } from "react";
+import { addDoc, collection, deleteDoc, doc, DocumentData, onSnapshot, orderBy, query, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import Moment from 'react-moment';
 
 
-// const Post = ({ id, username, userImg, img, caption }: PostPropsTypes) => {
-const Post = ({ id, username, userImg, img, caption }: PostPropsTypes) => {
+const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
    const { data: session } = useSession();
 
    const [comment, setComment] = useState('');
-   const [comments, setComments] = useState([]);
-   const [likes, setLikes] = useState([]);
+   const [comments, setComments] = useState<DocumentData>([]);
+   const [likes, setLikes] = useState<DocumentData>([]);
    const [hasLiked, setHasLiked] = useState(false);
 
 
@@ -36,20 +33,26 @@ const Post = ({ id, username, userImg, img, caption }: PostPropsTypes) => {
       setLikes(snapshot.docs);
    }), [db, id]);
 
-   useEffect(() => setHasLiked(likes.findIndex((like) => like.id === session?.user?.uid) !== -1), [likes]);
+   useEffect(() => setHasLiked(likes.findIndex((like: any) => like.id === session?.user.uid) !== -1), [likes]);
+
+   // console.log(likes[0].id);
+   // console.log(comments.data());
+   // console.log(comments[0]?.data());
+   // console.log(typeof (comments[1]?.data().timestamp.toDate()));
+   // console.log(typeof (comments[1]?.data().timestamp));
 
 
    const likePost = async () => {
       if (hasLiked) {
-         await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid));
+         await deleteDoc(doc(db, 'posts', id, 'likes', session?.user.uid!));
       } else {
-         await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
-            username: session.user.username,
+         await setDoc(doc(db, "posts", id, "likes", session?.user.uid!), {
+            username: session?.user.username,
          });
       }
    };
 
-   const sendComment = async (e: any) => {
+   const sendComment = async (e: SyntheticEvent) => {
       e.preventDefault();
 
       const commentToSend = comment;
@@ -57,11 +60,12 @@ const Post = ({ id, username, userImg, img, caption }: PostPropsTypes) => {
 
       await addDoc(collection(db, 'posts', id, 'comments'), {
          comment: commentToSend,
-         username: session.user.username,
-         userImage: session.user.image,
+         username: session?.user.username,
+         userImage: session?.user.image,
          timestamp: serverTimestamp(),
       });
    };
+
 
    return (
       <div className="bg-white my-7 border rounded-sm" >
@@ -99,18 +103,18 @@ const Post = ({ id, username, userImg, img, caption }: PostPropsTypes) => {
          )}
 
          {/* caption */}
-         <p className="p-5 truncate">
+         <div className="p-5 truncate">
             {likes.length > 0 && (
                <p className="font-bold mb-1 text-sm" >{likes.length} likes</p>
             )}
             <span className="font-bold mr-1" >{username}</span>
             {caption}
-         </p>
+         </div>
 
          {/* comments */}
          {comments.length > 0 && (
             <div className="ml-10 h-20 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
-               {comments.map(comment => (
+               {comments.map((comment: CommentsComment) => (
                   <div className="flex items-center space-x-2 mb-3"
                      key={comment.id}>
                      <img src={comment.data().userImage} alt=""
@@ -120,7 +124,6 @@ const Post = ({ id, username, userImg, img, caption }: PostPropsTypes) => {
                         <span className="font-bold">{comment.data().username}</span>{" "}
                         {comment.data().comment}
                      </p>
-
                      <Moment fromNow className="pr-5 text-xs">
                         {comment.data().timestamp?.toDate()}
                      </Moment>

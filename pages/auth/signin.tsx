@@ -6,8 +6,6 @@ import Header from "../../components/Header";
 
 
 const SignIn: NextPage<GoogleProviderTypes> = ({ providers }) => {
-   // console.log(providers);
-
    return (
       <div>
          <Header />
@@ -32,6 +30,7 @@ const SignIn: NextPage<GoogleProviderTypes> = ({ providers }) => {
       </div>
    );
 };
+
 
 export const getServerSideProps: GetServerSideProps = async () => {
    const providers = await getProviders();

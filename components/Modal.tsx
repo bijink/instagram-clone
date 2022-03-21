@@ -12,12 +12,13 @@ import { ref, getDownloadURL, uploadString } from "firebase/storage";
 const Modal = () => {
    const { data: session } = useSession();
 
-   const filePickerRef = useRef(null);
-   const captionRef = useRef(null);
+   const filePickerRef = useRef<HTMLInputElement | null>(null);
+   const captionRef = useRef<HTMLInputElement | null>(null);
 
    const [open, setOpen] = useRecoilState(modalState);
 
-   const [selectedFile, setSelectedFile] = useState<any>(null);
+   const [selectedFile, setSelectedFile] = useState<string>(null!);
+   // console.log(typeof (selectedFile));
    const [loading, setLoading] = useState(false);
 
 
@@ -37,7 +38,7 @@ const Modal = () => {
 
       const imageRef = ref(storage, `posts/${docRef.id}/image`);
 
-      await uploadString(imageRef, selectedFile, "data_url").then(async (snapshot) => {
+      await uploadString(imageRef, selectedFile, "data_url").then(async () => {
          const downloadURL = await getDownloadURL(imageRef);
 
          await updateDoc(doc(db, 'posts', docRef.id), {
@@ -47,8 +48,7 @@ const Modal = () => {
 
       setOpen(false);
       setLoading(false);
-      setSelectedFile(null);
-
+      setSelectedFile(null!);
    };
 
    const addImageToPost = (e: any) => {
@@ -110,14 +110,14 @@ const Modal = () => {
                                  src={selectedFile}
                                  alt=""
                                  className="w-full object-contain cursor-pointer"
-                                 onClick={() => setSelectedFile(null)}
+                                 onClick={() => setSelectedFile(null!)}
                               />
                            </>
                         ) : (
                            <>
                               <div
                                  className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 cursor-pointer"
-                                 onClick={() => filePickerRef.current.click()}
+                                 onClick={() => filePickerRef.current?.click()}
                               >
                                  <CameraIcon
                                     className="h-6 w-6 text-red-600"

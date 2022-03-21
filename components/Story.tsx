@@ -1,9 +1,7 @@
-import type { StoryPropsTypes } from "../types/components/Story.types";
-
-import Image from "next/image";
+import type { PropsTypes } from "../types/components/Story.types";
 
 
-const Story = ({ img, username }: StoryPropsTypes) => {
+const Story = ({ img, username }: PropsTypes) => {
    return (
       <div className="" >
          <img
