@@ -18,7 +18,6 @@ const Modal = () => {
    const [open, setOpen] = useRecoilState(modalState);
 
    const [selectedFile, setSelectedFile] = useState<string>(null!);
-   // console.log(typeof (selectedFile));
    const [loading, setLoading] = useState(false);
 
 

@@ -1,19 +1,13 @@
 import type { CommentsComment, PropsTypes } from "../types/components/Post.types";
 
-import {
-   BookmarkIcon,
-   ChatIcon,
-   DotsHorizontalIcon,
-   EmojiHappyIcon,
-   HeartIcon,
-   PaperAirplaneIcon,
-} from '@heroicons/react/outline';
+import { BookmarkIcon, ChatIcon, DotsHorizontalIcon, EmojiHappyIcon, HeartIcon, PaperAirplaneIcon } from '@heroicons/react/outline';
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
 import { useSession } from "next-auth/react";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { addDoc, collection, deleteDoc, doc, DocumentData, onSnapshot, orderBy, query, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import Moment from 'react-moment';
+import Image from "next/image";
 
 
 const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
@@ -34,12 +28,6 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
    }), [db, id]);
 
    useEffect(() => setHasLiked(likes.findIndex((like: any) => like.id === session?.user.uid) !== -1), [likes]);
-
-   // console.log(likes[0].id);
-   // console.log(comments.data());
-   // console.log(comments[0]?.data());
-   // console.log(typeof (comments[1]?.data().timestamp.toDate()));
-   // console.log(typeof (comments[1]?.data().timestamp));
 
 
    const likePost = async () => {
@@ -81,10 +69,13 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
          </div>
 
          {/* img */}
-         <img
+         <Image
+            // className="object-cover w-full "
             src={img}
-            alt=""
-            className="object-cover w-full "
+            width={400} height={250}
+            layout='responsive'
+            placeholder='blur' blurDataURL={img}
+            alt="post"
          />
 
          {/* buttons */}
@@ -112,8 +103,8 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
          </div>
 
          {/* comments */}
-         {comments.length > 0 && (
-            <div className="ml-10 h-20 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
+         {(comments.length > 0) && (
+            <div className="ml-10 h-20 overflow-y-scroll scrollbar-thumb-gray-300 scrollbar-thin">
                {comments.map((comment: CommentsComment) => (
                   <div className="flex items-center space-x-2 mb-3"
                      key={comment.id}>

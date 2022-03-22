@@ -10,27 +10,11 @@ const Posts = () => {
    const [posts, setPosts] = useState<DocumentData>([]);
 
 
-   // useEffect(() => {
-   //    // const unsubscribe = onSnapshot(query(collection(db, 'posts'), orderBy('timestamp', 'desc')), snapshot => {
-   //    //    setPosts(snapshot.docs);
-   //    // });
-   //    // return unsubscribe;
-
-   //    return onSnapshot(query(collection(db, 'posts'), orderBy('timestamp', 'desc')), snapshot => {
-   //       setPosts(snapshot.docs);
-   //    });
-   // }, [db]);
-
    useEffect(() => (
       onSnapshot(query(collection(db, 'posts'), orderBy('timestamp', 'desc')), (snapshot) => {
          setPosts(snapshot.docs);
       })
    ), [db]);
-
-   // console.log(posts);
-   // console.log(posts[0].data());
-   // console.log(typeof (posts[0].data()));
-   // console.log(typeof (posts[0].data().image));
 
 
    return (

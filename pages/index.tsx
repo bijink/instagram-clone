@@ -11,7 +11,7 @@ const Home: NextPage = () => {
       <div className="bg-gray-50 h-screen overflow-y-scroll">
          <Head>
             <title>Instagram Clone</title>
-            <link rel="icon" href="/instagram-logo_page.webp" />
+            <link rel="icon" href="/insta-icon_page.webp" />
          </Head>
          <Header />
          <Feed />
