@@ -25,7 +25,7 @@ const Posts = () => {
                id={post.id}
                username={post.data().username}
                userImg={post.data().profileImg}
-               img={post.data().image}
+               img={post.data().image || '/insta-logo.png'}
                caption={post.data().caption}
             />
          ))}

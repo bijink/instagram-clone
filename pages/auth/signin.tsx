@@ -10,8 +10,7 @@ import InstaLogo from "../../public/insta-logo.png";
 const SignIn: NextPage<GoogleProviderTypes> = ({ providers }) => {
    return (
       <div>
-         <Header />
-         {/* <div className="flex flex-col items-center justify-center min-h-screen py-2 -mt-10 px-14 text-center"> */}
+         <Header signInPage />
          <div className="flex flex-col items-center justify-center text-center py-16">
             <Image src={InstaLogo} width={250} height={150} alt="instagram" />
             <p className="font-xs italic">This is not a <b>real</b> app</p>

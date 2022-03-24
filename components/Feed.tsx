@@ -9,9 +9,8 @@ const Feed = () => {
    const { data: session } = useSession();
 
    return (
-      <main className={`grid grid-cols-1 lg:grid-cols-3 md:max-w-3xl 
-      xl:grid-cols-3 xl:max-w-6xl mx-auto ${!session && '!grid-cols-1 !max-w-3xl'}`} >
-         <section className="col-span-2">
+      <main className={`grid grid-cols-2 lg:grid-cols-3 sm:max-w-xl lg:max-w-4xl mx-auto ${!session && 'lg:grid-cols-2 lg:max-w-2xl'}`} >
+         <section className={`col-span-2`}>
             <Stories />
             <Posts />
          </section>
