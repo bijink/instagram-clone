@@ -17,5 +17,6 @@ export interface CommentsComment {
       };
       userImage: string;
       username: string;
+      userID: string;
    };
 }

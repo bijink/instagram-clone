@@ -1,7 +1,7 @@
 import type { CommentsComment, PropsTypes } from "../types/components/Post.types";
 
 import { BookmarkIcon, ChatIcon, DotsHorizontalIcon, EmojiHappyIcon, HeartIcon, PaperAirplaneIcon } from '@heroicons/react/outline';
-import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
+import { HeartIcon as HeartIconFilled, TrashIcon } from '@heroicons/react/solid';
 import { useSession } from "next-auth/react";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { addDoc, collection, deleteDoc, doc, DocumentData, onSnapshot, orderBy, query, serverTimestamp, setDoc } from "firebase/firestore";
@@ -12,6 +12,8 @@ import Image from "next/image";
 
 const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
    const { data: session } = useSession();
+   // console.log(session?.user.uid);
+   // console.log(session?.user);
 
    const [comment, setComment] = useState('');
    const [comments, setComments] = useState<DocumentData>([]);
@@ -22,6 +24,7 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
    useEffect(() => onSnapshot(query(collection(db, 'posts', id, 'comments'), orderBy('timestamp', 'desc')), (snapshot) => {
       setComments(snapshot.docs);
    }), [db, id]);
+   // console.log(comments[1]?.data().userID);
 
    useEffect(() => onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) => {
       setLikes(snapshot.docs);
@@ -49,9 +52,14 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
       await addDoc(collection(db, 'posts', id, 'comments'), {
          comment: commentToSend,
          username: session?.user.username,
+         userID: session?.user.uid,
          userImage: session?.user.image,
          timestamp: serverTimestamp(),
       });
+   };
+
+   const deleteComment = async (commentID: string) => {
+      await deleteDoc(doc(db, 'posts', id, 'comments', commentID));
    };
 
 
@@ -115,9 +123,14 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
                         <span className="font-bold">{comment.data().username}</span>{" "}
                         {comment.data().comment}
                      </p>
-                     <Moment fromNow className="pr-5 text-xs">
+                     <Moment fromNow className={`${((comment.data().userID === session?.user.uid) ? 'pr-1' : 'pr-4')} text-xs`}>
                         {comment.data().timestamp?.toDate()}
                      </Moment>
+                     {(comment.data().userID === session?.user.uid) && (
+                        <div className="pr-4">
+                           <TrashIcon onClick={() => deleteComment(comment.id)} className="h-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                        </div>
+                     )}
                   </div>
                ))}
             </div>
