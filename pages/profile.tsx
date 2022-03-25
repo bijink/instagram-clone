@@ -1,3 +1,5 @@
+import type { ProfilePostTypes } from '../types/pages/Profile.types';
+
 import { CogIcon } from '@heroicons/react/outline';
 import { ViewGridIcon } from '@heroicons/react/solid';
 import { collection, DocumentData, onSnapshot, orderBy, query, where } from 'firebase/firestore';
@@ -6,8 +8,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import ProfilePost from '../components/ProfilePost';
 import { db } from '../firebase';
-import { PostsPost } from '../types/components/Posts.types';
+import Modal from '../components/Modal';
 
 
 const profile = () => {
@@ -20,7 +23,7 @@ const profile = () => {
       onSnapshot(query(collection(db, 'posts'), where("username", "==", `${session?.user.username}`), orderBy('timestamp', 'desc')), (snapshot) => {
          setPosts(snapshot.docs);
       });
-   }, [session]);
+   }, [session, db]);
 
 
    return (
@@ -58,19 +61,23 @@ const profile = () => {
                   <p className="">POSTS</p>
                </div>
                <div className="flex flex-wrap justify-around pb-10">
-                  {posts.map((post: PostsPost) => (
-                     <div key={post.id} className='my-2' >
-                        <Image
-                           src={post.data().image}
-                           width='280' height='280'
-                           placeholder='blur' blurDataURL={post.data().image}
-                        />
-                     </div>
+                  {posts.map((post: ProfilePostTypes) => (
+                     <ProfilePost
+                        key={post.id}
+                        id={post.id}
+                        username={post.data().username}
+                        userImg={post.data().profileImg}
+                        img={post.data().image || '/insta-logo.png'}
+                        caption={post.data().caption}
+                     />
                   ))}
                </div>
                <hr />
             </div>
          </main>
+
+         <Modal />
+
          <footer className='text-center p-12 text-gray-400'>
             © 2022 Instagram-Clone from Bijin
          </footer>

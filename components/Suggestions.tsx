@@ -37,7 +37,7 @@ const Suggestions = () => {
                <button className="text-blue-400 text-xs">Follow</button>
             </div>
          ))}
-         <div className="pt-10 text-xs text-gray-400">
+         <div className="pt-10 pl-2 text-xs text-gray-400">
             © 2022 INSTAGRAM-CLONE FROM BIJIN
          </div>
       </div>

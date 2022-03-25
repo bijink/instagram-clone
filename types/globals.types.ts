@@ -23,3 +23,17 @@ export interface FakerDataTypes {
       name: string,
    };
 };
+
+export interface PostsTypes {
+   id: string;
+   data: () => {
+      caption: string;
+      image: string;
+      profileImg: string;
+      timestamp: {
+         nanoseconds: number;
+         seconds: number;
+      };
+      username: string;
+   };
+}

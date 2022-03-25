@@ -11,4 +11,14 @@
    .btn {
       @apply h-7 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
    }
+   .profilePostSize {
+      @apply w-[280px] h-[280px];
+   }
+}
+
+.profilePostParrent:hover > .profilePostShade {
+   display: flex;
+   background-color: rgba(0, 0, 0, 0.322);
+   justify-content: center;
+   align-items: center;
 }
