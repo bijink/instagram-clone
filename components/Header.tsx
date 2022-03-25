@@ -25,7 +25,7 @@ const Header = ({ signInPage }: { signInPage?: boolean; }) => {
 
    return (
       <div className="shadow-sm border-b bg-white sticky top-0 z-50 lg:px-8 ">
-         <div className="flex justify-between max-w-4xl mx-5 lg:mx-auto" >
+         <div className="flex justify-between h-16 max-w-4xl mx-5 lg:mx-auto" >
             {/* Left */}
             <div onClick={() => router.push('/')} className="relative hidden lg:inline-grid w-24 cursor-pointer" >
                <Image src={InstaLogo} priority layout="fill" objectFit="contain" />
@@ -35,7 +35,7 @@ const Header = ({ signInPage }: { signInPage?: boolean; }) => {
             </div>
 
             {/* Middle */}
-            <div className={`${inputFocus && "flex-1 mx-5"} transition-all duration-700 ease-out`}>
+            <div className={`hidden sm:inline-block ${inputFocus && "flex-1 mx-5"} transition-all duration-700 ease-out`}>
                <div className="relative p-3 rounded-md" >
                   <div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none" >
                      <SearchIcon className="h-5 w-5 text-gray-500" />

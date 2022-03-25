@@ -29,7 +29,7 @@ const customStyles = {
 };
 
 
-const ProfilePost = ({ id, username, img }: PropsTypes) => {
+const ProfilePost = ({ id, img }: PropsTypes) => {
    const { data: session } = useSession();
 
    const [likes, setLikes] = useState<DocumentData>([]);
@@ -64,15 +64,23 @@ const ProfilePost = ({ id, username, img }: PropsTypes) => {
 
 
    return (
-      <div className='my-2 profilePostSize profilePostParrent'  >
-         <div className="profilePostSize absolute">
+      <div className='m-1 sm:m-2 profilePostSize profilePostParrent'  >
+         <div className="sm:hidden profilePostSize absolute">
+            <Image
+               src={img}
+               width='180' height='180'
+               placeholder='blur' blurDataURL={img}
+               className='w-96 h-96'
+            />
+         </div>
+         <div className="hidden sm:block profilePostSize absolute">
             <Image
                src={img}
                width='280' height='280'
                placeholder='blur' blurDataURL={img}
             />
          </div>
-         <div className="profilePostSize profilePostShade hidden bg-gray-900 bg-opacity-30  absolute text-white space-x-7 font-semibold">
+         <div className="profilePostSize profilePostShade hidden bg-gray-900 bg-opacity-30  absolute text-white space-x-2 sm:space-x-7 font-semibold">
             <div className="flex space-x-1">
                <HeartIcon className="h-6" />
                <p>{likes.length}</p>

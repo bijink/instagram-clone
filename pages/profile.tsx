@@ -37,19 +37,28 @@ const profile = () => {
 
          {/* Profile details */}
          <main className="max-w-4xl mx-auto">
-            <div className='flex justify-start py-8'>
-               <div className="ml-[4.5rem] mr-[6rem]">
-                  {session && <Image className='rounded-full' src={session.user.image!} width='150' height='150' />}
+            <div>
+               <div className='flex justify-start py-8'>
+                  <div className=" mx-5 sm:ml-[4.5rem] sm:mr-[6rem] w-[80px] sm:w-[150px]">
+                     {session && <Image className='rounded-full' layout='responsive' objectFit='contain' src={session.user.image!} width='150' height='150' />}
+                  </div>
+                  <div className="space-y-5">
+                     <div className="flex items-center space-x-5">
+                        <h4 className='text-3xl font-light'>{session?.user.username}</h4>
+                        <button className="hidden sm:block border rounded-md px-[.6rem] text-sm font-semibold h-7">Edit Profile</button>
+                        <CogIcon className='h-6 cursor-pointer' />
+                     </div>
+                     <button className="sm:hidden border rounded-md px-[.6rem] text-sm font-semibold h-7">Edit Profile</button>
+                     <div className="hidden sm:block">
+                        <p><span className=' font-semibold'>{posts.length}</span> posts</p>
+                     </div>
+                     <div className="hidden sm:block">
+                        <h4 className='text-lg '>{session?.user.name}</h4>
+                     </div>
+                  </div>
                </div>
-               <div className="space-y-5">
-                  <div className="flex items-center space-x-5">
-                     <h4 className='text-3xl font-light'>{session?.user.username}</h4>
-                     <button className="border rounded-md px-[.6rem] text-sm font-semibold h-7">Edit Profile</button>
-                     <CogIcon className='h-6 cursor-pointer' />
-                  </div>
-                  <div className="">
-                     <h4 className='text-lg '>{session?.user.name}</h4>
-                  </div>
+               <div className="sm:hidden ml-7 mb-5">
+                  <h4 className='text-md '>{session?.user.name}</h4>
                </div>
             </div>
 
@@ -60,7 +69,7 @@ const profile = () => {
                   <ViewGridIcon className='h-4' />
                   <p className="">POSTS</p>
                </div>
-               <div className="flex flex-wrap justify-around pb-10">
+               <div className="flex flex-wrap justify-center sm:justify-around pb-10">
                   {posts.map((post: ProfilePostTypes) => (
                      <ProfilePost
                         key={post.id}
