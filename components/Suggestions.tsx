@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 
 
 const Suggestions = () => {
+   // reactState
    const [suggestionData, setSuggestionData] = useState([] as SuggestionDataTypes[]);
 
-
+   // reactEffect
    useEffect(() => {
       const suggestionData = [...Array(5)].map((_, i) => ({
          ...faker.helpers.contextualCard(),
@@ -27,7 +28,7 @@ const Suggestions = () => {
             <div key={profile.id} className="flex items-center justify-between mt-3" >
                <img
                   src={profile.avatar}
-                  alt=""
+                  alt="profile"
                   className="w-10 h-10 rounded-full border p-[2px]"
                />
                <div className="flex-1 ml-4">

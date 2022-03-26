@@ -4,20 +4,18 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { collection, deleteDoc, doc, DocumentData, onSnapshot } from "firebase/firestore";
 import { db, storage } from "../firebase";
-import { ChatIcon, HeartIcon } from "@heroicons/react/solid";
+import { ChatIcon, HeartIcon, TrashIcon } from "@heroicons/react/solid";
 import { deleteObject, ref } from "firebase/storage";
 import { useSession } from "next-auth/react";
-import { DotsVerticalIcon } from "@heroicons/react/outline";
 import Modal from 'react-modal';
 
 
+// react-modal
 Modal.setAppElement('#__next');
 const customStyles = {
    content: {
       top: '50%',
       left: '50%',
-      // right: 'auto',
-      // bottom: 'auto',
       right: '40%',
       bottom: '25%',
       marginRight: '-50%',
@@ -30,13 +28,14 @@ const customStyles = {
 
 
 const ProfilePost = ({ id, img }: PropsTypes) => {
+   // reactAuth
    const { data: session } = useSession();
-
+   // reactState
    const [likes, setLikes] = useState<DocumentData>([]);
    const [comments, setComments] = useState<DocumentData>([]);
    const [profileModal, setProfileModal] = useState(false);
 
-
+   // reactEffect
    useEffect(() => onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) => {
       setLikes(snapshot.docs);
    }), [db, id]);
@@ -46,20 +45,9 @@ const ProfilePost = ({ id, img }: PropsTypes) => {
 
 
    const imageRef = ref(storage, `posts/${id}/image`);
-
    const deletePost = async () => {
       await deleteDoc(doc(db, 'posts', id));
-
-      likes && await deleteDoc(doc(db, 'posts', id, 'likes', session?.user.uid!));
-      comments && await deleteDoc(doc(db, 'posts', id, 'comments', session?.user.uid!));
-
-      // Delete the file
-      deleteObject(imageRef).then(() => {
-         // File deleted successfully
-      }).catch((error) => {
-         // Uh-oh, an error occurred!
-         console.log(error.message);
-      });
+      deleteObject(imageRef);
    };
 
 
@@ -71,6 +59,7 @@ const ProfilePost = ({ id, img }: PropsTypes) => {
                width='180' height='180'
                placeholder='blur' blurDataURL={img}
                className='w-96 h-96'
+               alt="post"
             />
          </div>
          <div className="hidden sm:block profilePostSize absolute">
@@ -78,6 +67,7 @@ const ProfilePost = ({ id, img }: PropsTypes) => {
                src={img}
                width='280' height='280'
                placeholder='blur' blurDataURL={img}
+               alt="post"
             />
          </div>
          <div className="profilePostSize profilePostShade hidden bg-gray-900 bg-opacity-30  absolute text-white space-x-2 sm:space-x-7 font-semibold">
@@ -90,7 +80,7 @@ const ProfilePost = ({ id, img }: PropsTypes) => {
                <p>{comments.length}</p>
             </div>
             <div>
-               <DotsVerticalIcon onClick={() => setProfileModal(true)} className="h-5 cursor-pointer" />
+               <TrashIcon onClick={() => setProfileModal(true)} className="h-5 cursor-pointer" />
             </div>
 
             <Modal

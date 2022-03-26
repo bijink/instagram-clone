@@ -1,4 +1,5 @@
 import type { ProfilePostTypes } from '../types/pages/Profile.types';
+import type { NextPage } from 'next';
 
 import { CogIcon } from '@heroicons/react/outline';
 import { ViewGridIcon } from '@heroicons/react/solid';
@@ -13,12 +14,13 @@ import { db } from '../firebase';
 import Modal from '../components/Modal';
 
 
-const profile = () => {
+const profile: NextPage = () => {
+   // nextAuth
    const { data: session } = useSession();
-
+   // reactState
    const [posts, setPosts] = useState<DocumentData>([]);
 
-
+   // reactEffect
    useEffect(() => {
       onSnapshot(query(collection(db, 'posts'), where("username", "==", `${session?.user.username}`), orderBy('timestamp', 'desc')), (snapshot) => {
          setPosts(snapshot.docs);
@@ -30,7 +32,6 @@ const profile = () => {
       <div>
          <Head>
             <title>{session && (`${session.user.name} (@${session.user.username}) • `)}Instagram Clone</title>
-            <link rel="icon" href="/insta-icon_page.webp" />
          </Head>
 
          <Header />

@@ -1,7 +1,10 @@
+import type { PropsTypes } from "../types/components/Header.types";
+
 import Image from "next/image";
 import { SearchIcon, PlusCircleIcon, UserGroupIcon, HeartIcon, PaperAirplaneIcon, MenuIcon, UserCircleIcon } from '@heroicons/react/outline';
 import { PlusCircleIcon as PlusCircleIconFilled } from '@heroicons/react/solid';
-import { HomeIcon } from '@heroicons/react/solid';
+import { HomeIcon } from '@heroicons/react/outline';
+import { HomeIcon as HomeIconFilled } from '@heroicons/react/solid';
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
@@ -11,13 +14,14 @@ import InstaIcon from '../public/insta-icon.png';
 import { useState } from "react";
 
 
-const Header = ({ signInPage }: { signInPage?: boolean; }) => {
+const Header = ({ fromSigninPage, fromHomePage }: PropsTypes) => {
+   // nextRoute
    const router = useRouter();
-
+   // nextAuth
    const { data: session } = useSession();
-
+   // recoil
    const [open, setOpen] = useRecoilState(modalState);
-
+   // reactState
    const [menuBtnTrigger, setMenuBtnTrigger] = useState(false);
    const [inputFocus, setInputFocus] = useState(false);
    const [profileIconTrigger, setProfileIconTrigger] = useState(false);
@@ -42,7 +46,7 @@ const Header = ({ signInPage }: { signInPage?: boolean; }) => {
                   </div>
                   <input
                      className="bg-gray-200 block w-full pl-10 sm:text-sm border-transparent rounded-md 
-                     focus:ring-transparent focus:border-transparent"
+                        focus:ring-transparent focus:border-transparent"
                      type="text"
                      placeholder="Search"
                      onFocus={() => setInputFocus(true)}
@@ -53,7 +57,11 @@ const Header = ({ signInPage }: { signInPage?: boolean; }) => {
 
             {/* Right */}
             <div className="flex items-center justify-end space-x-4">
-               <HomeIcon onClick={() => router.push('/')} className="h-6 cursor-pointer hover:scale-125 transition-all duration-150 ease-out" />
+               {fromHomePage ? (
+                  <HomeIconFilled onClick={() => router.push('/')} className="h-6 cursor-pointer hover:scale-125 transition-all duration-150 ease-out" />
+               ) : (
+                  <HomeIcon onClick={() => router.push('/')} className="h-6 cursor-pointer hover:scale-125 transition-all duration-150 ease-out" />
+               )}
 
                {session ? (
                   <>
@@ -69,6 +77,7 @@ const Header = ({ signInPage }: { signInPage?: boolean; }) => {
                      <UserGroupIcon className="navBtn" />
                      <HeartIcon className="navBtn" />
 
+                     {/* dropdown */}
                      <div className="relative md:hidden inline-block text-left">
                         <MenuIcon onClick={() => setMenuBtnTrigger(prev => !prev)} className="h-6 cursor-pointer hover:scale-125 transition-all duration-150 ease-out" />
                         {menuBtnTrigger && (
@@ -97,7 +106,6 @@ const Header = ({ signInPage }: { signInPage?: boolean; }) => {
                                     <HeartIcon className="h-6 " />
                                     <p className="text-gray-700">Likes</p>
                                  </div>
-
                               </div>
                            </div>
                         )}
@@ -107,10 +115,9 @@ const Header = ({ signInPage }: { signInPage?: boolean; }) => {
                         <Image
                            className="rounded-full cursor-pointer"
                            src={session.user.image!}
-                           // width={'100%'} height={'100%'}
                            width={100} height={100}
                            layout="responsive"
-                           alt="user-profile"
+                           alt="profile"
                            onClick={() => setProfileIconTrigger(prev => !prev)}
                         />
                         {profileIconTrigger && (
@@ -133,7 +140,7 @@ const Header = ({ signInPage }: { signInPage?: boolean; }) => {
                      </div>
                   </>
                ) : (
-                  <button className={`${signInPage && 'hidden'}`} onClick={() => signIn()} >SignIn</button>
+                  <button className={`${fromSigninPage && 'hidden'}`} onClick={() => signIn()} >SignIn</button>
                )}
             </div>
          </div>

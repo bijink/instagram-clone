@@ -3,15 +3,22 @@ import type { AppProps } from 'next/app';
 import '../styles/globals.css';
 import { SessionProvider } from "next-auth/react";
 import { RecoilRoot } from 'recoil';
+import Head from 'next/head';
 
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
    return (
-      <SessionProvider session={session}>
-         <RecoilRoot>
-            <Component {...pageProps} />
-         </RecoilRoot>
-      </SessionProvider>
+      <>
+         <Head>
+            <title>Instagram Clone</title>
+            <link rel="icon" href="/insta-icon_page.webp" />
+         </Head>
+         <SessionProvider session={session}>
+            <RecoilRoot>
+               <Component {...pageProps} />
+            </RecoilRoot>
+         </SessionProvider>
+      </>
    );
 }
 

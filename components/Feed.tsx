@@ -6,7 +6,9 @@ import Suggestions from "./Suggestions";
 
 
 const Feed = () => {
+   // nextAuth
    const { data: session } = useSession();
+
 
    return (
       <main className={`grid grid-cols-2 lg:grid-cols-3 sm:max-w-xl lg:max-w-4xl mx-auto ${!session && 'lg:grid-cols-2 lg:max-w-2xl'}`} >

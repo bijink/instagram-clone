@@ -13,11 +13,10 @@ const SignIn: NextPage<GoogleProviderTypes> = ({ providers }) => {
       <div>
          <Head>
             <title>Sign In - Instagram Clone</title>
-            <link rel="icon" href="/insta-icon_page.webp" />
          </Head>
-         <Header signInPage />
+         <Header fromSigninPage />
          <div className="flex flex-col items-center justify-center text-center py-16">
-            <Image src={InstaLogo} width={250} height={150} alt="instagram" />
+            <Image src={InstaLogo} width={250} height={150} alt="instagram-logo" />
             <p className="font-xs italic">This is not a <b>real</b> app</p>
             <div className="mt-20">
                {Object.values(providers).map((provider) => (

@@ -11,25 +11,21 @@ import Image from "next/image";
 
 
 const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
+   // nextAuth
    const { data: session } = useSession();
-   // console.log(session?.user.uid);
-   // console.log(session?.user);
-
+   // reactState
    const [comment, setComment] = useState('');
    const [comments, setComments] = useState<DocumentData>([]);
    const [likes, setLikes] = useState<DocumentData>([]);
    const [hasLiked, setHasLiked] = useState(false);
 
-
+   // reactEffect
    useEffect(() => onSnapshot(query(collection(db, 'posts', id, 'comments'), orderBy('timestamp', 'desc')), (snapshot) => {
       setComments(snapshot.docs);
    }), [db, id]);
-   // console.log(comments[1]?.data().userID);
-
    useEffect(() => onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) => {
       setLikes(snapshot.docs);
    }), [db, id]);
-
    useEffect(() => setHasLiked(likes.findIndex((like: any) => like.id === session?.user.uid) !== -1), [likes]);
 
 
@@ -42,13 +38,10 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
          });
       }
    };
-
    const sendComment = async (e: SyntheticEvent) => {
       e.preventDefault();
-
       const commentToSend = comment;
       setComment('');
-
       await addDoc(collection(db, 'posts', id, 'comments'), {
          comment: commentToSend,
          username: session?.user.username,
@@ -57,7 +50,6 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
          timestamp: serverTimestamp(),
       });
    };
-
    const deleteComment = async (commentID: string) => {
       await deleteDoc(doc(db, 'posts', id, 'comments', commentID));
    };
@@ -69,7 +61,7 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
          <div className="flex items-center p-5" >
             <img
                src={userImg}
-               alt=""
+               alt="profile"
                className="rounded-full h-12 w-12 object-contain border p-1 mr-3"
             />
             <p className="flex-1 font-bold " >{username}</p>
@@ -116,7 +108,7 @@ const Post = ({ id, username, userImg, img, caption }: PropsTypes) => {
                {comments.map((comment: CommentsComment) => (
                   <div className="flex items-center space-x-2 mb-3"
                      key={comment.id}>
-                     <img src={comment.data().userImage} alt=""
+                     <img src={comment.data().userImage} alt="commenter-profile"
                         className="h-7 rounded-full "
                      />
                      <p className="text-sm flex-1">

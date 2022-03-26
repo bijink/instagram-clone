@@ -9,7 +9,7 @@ const Story = ({ img, username }: PropsTypes) => {
             object-contain cursor-pointer 
             hover:scale-110 transition transform duration-200 ease-out"
             src={img}
-            alt=""
+            alt="profile"
          />
          <p className="text-xs w-14 truncate text-center" >{username}</p>
       </div>

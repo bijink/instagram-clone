@@ -2,6 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 
 
 const MiniProfile = () => {
+   // nextAuth
    const { data: session } = useSession();
 
 
@@ -9,7 +10,7 @@ const MiniProfile = () => {
       <div className="flex items-center justify-between mt-14 ml-8" >
          <img
             src={session?.user.image!}
-            alt=""
+            alt="profile"
             className="w-16 h-16 rounded-full border p-[2px] "
          />
          <div className="flex-1 mx-4">

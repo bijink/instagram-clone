@@ -7,17 +7,17 @@ import { useSession } from 'next-auth/react';
 
 
 const Stories = () => {
+   // nextAuth
    const { data: session } = useSession();
-
+   // reactState
    const [storiesData, setStoriesData] = useState([] as StoriesDataTypes[]);
 
-
+   // reactEffect
    useEffect(() => {
       const fakerData = [...Array(20)].map((_, i) => ({
          ...faker.helpers.contextualCard(),
          id: i
       }));
-      // console.log(fakerData);
       setStoriesData(fakerData);
    }, []);
 

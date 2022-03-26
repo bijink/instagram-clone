@@ -7,9 +7,10 @@ import { db } from "../firebase";
 
 
 const Posts = () => {
+   // reactState
    const [posts, setPosts] = useState<DocumentData>([]);
 
-
+   // reactEffect
    useEffect(() => (
       onSnapshot(query(collection(db, 'posts'), orderBy('timestamp', 'desc')), (snapshot) => {
          setPosts(snapshot.docs);

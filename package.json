@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.5.0",
+    "@heroicons/react": "^1.0.6",
     "firebase": "^9.6.9",
     "moment": "^2.29.1",
     "next": "latest",
@@ -18,7 +19,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0",
-    "@heroicons/react": "^1.0.6",
     "@tailwindcss/forms": "^0.5.0",
     "@types/node": "17.0.4",
     "@types/react": "17.0.38",

@@ -10,52 +10,43 @@ import { ref, getDownloadURL, uploadString } from "firebase/storage";
 
 
 const Modal = () => {
+   // nextAuth
    const { data: session } = useSession();
-
+   // reactRef
    const filePickerRef = useRef<HTMLInputElement | null>(null);
    const captionRef = useRef<HTMLInputElement | null>(null);
-
+   // recoil
    const [open, setOpen] = useRecoilState(modalState);
-
+   // reactState
    const [selectedFile, setSelectedFile] = useState<string>(null!);
    const [loading, setLoading] = useState(false);
 
 
    const uploadPost = async () => {
       if (loading) return;
-
       setLoading(true);
-
       const docRef = await addDoc(collection(db, 'posts'), {
          username: session?.user?.username,
          caption: captionRef?.current?.value,
          profileImg: session?.user?.image,
          timestamp: serverTimestamp(),
       });
-
-      // console.log("New doc added with ID : ", docRef.id);
-
       const imageRef = ref(storage, `posts/${docRef.id}/image`);
-
       await uploadString(imageRef, selectedFile, "data_url").then(async () => {
          const downloadURL = await getDownloadURL(imageRef);
-
          await updateDoc(doc(db, 'posts', docRef.id), {
             image: downloadURL,
          });
       });
-
       setOpen(false);
       setLoading(false);
       setSelectedFile(null!);
    };
-
    const addImageToPost = (e: any) => {
       const reader = new FileReader();
       if (e.target.files[0]) {
          reader.readAsDataURL(e.target.files[0]);
       }
-
       reader.onload = (readerEvent: any) => {
          setSelectedFile(readerEvent.target.result);
       };
@@ -99,31 +90,25 @@ const Modal = () => {
                   leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                >
                   <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden
-                     shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
-
+                           shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
                      <div className="">
-
                         {selectedFile ? (
-                           <>
-                              <img
-                                 src={selectedFile}
-                                 alt=""
-                                 className="w-full object-contain cursor-pointer"
-                                 onClick={() => setSelectedFile(null!)}
-                              />
-                           </>
+                           <img
+                              src={selectedFile}
+                              alt="post"
+                              className="w-full object-contain cursor-pointer"
+                              onClick={() => setSelectedFile(null!)}
+                           />
                         ) : (
-                           <>
-                              <div
-                                 className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 cursor-pointer"
-                                 onClick={() => filePickerRef.current?.click()}
-                              >
-                                 <CameraIcon
-                                    className="h-6 w-6 text-red-600"
-                                    aria-hidden="true"
-                                 />
-                              </div>
-                           </>
+                           <div
+                              className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 cursor-pointer"
+                              onClick={() => filePickerRef.current?.click()}
+                           >
+                              <CameraIcon
+                                 className="h-6 w-6 text-red-600"
+                                 aria-hidden="true"
+                              />
+                           </div>
                         )}
 
                         <div className="">
@@ -170,7 +155,6 @@ const Modal = () => {
                            </button>
                         </div>
                      </div>
-
                   </div>
                </Transition.Child>
             </div>
