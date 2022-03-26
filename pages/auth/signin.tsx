@@ -5,11 +5,16 @@ import { getProviders, signIn as signInToProvider } from "next-auth/react";
 import Header from "../../components/Header";
 import Image from "next/image";
 import InstaLogo from "../../public/insta-logo.png";
+import Head from "next/head";
 
 
 const SignIn: NextPage<GoogleProviderTypes> = ({ providers }) => {
    return (
       <div>
+         <Head>
+            <title>Sign In - Instagram Clone</title>
+            <link rel="icon" href="/insta-icon_page.webp" />
+         </Head>
          <Header signInPage />
          <div className="flex flex-col items-center justify-center text-center py-16">
             <Image src={InstaLogo} width={250} height={150} alt="instagram" />
