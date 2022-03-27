@@ -9,8 +9,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from '../atoms/modalAtom';
-import InstaLogo from '../public/insta-logo.png';
-import InstaIcon from '../public/insta-icon.png';
 import { useState } from "react";
 
 
@@ -29,13 +27,13 @@ const Header = ({ fromSigninPage, fromHomePage }: PropsTypes) => {
 
    return (
       <div className="shadow-sm border-b bg-white sticky top-0 z-50 lg:px-8 ">
-         <div className="flex justify-between h-16 max-w-4xl mx-5 lg:mx-auto" >
+         <div className="flex justify-between items-center h-16 max-w-4xl mx-5 lg:mx-auto" >
             {/* Left */}
             <div onClick={() => router.push('/')} className="relative hidden lg:inline-grid w-24 cursor-pointer" >
-               <Image src={InstaLogo} priority layout="fill" objectFit="contain" />
+               <img src="/insta-logo.png" alt="instagram-logo" />
             </div>
             <div onClick={() => router.push('/')} className="relative lg:hidden w-8 flex-shrink-0 cursor-pointer " >
-               <Image src={InstaIcon} priority layout="fill" objectFit="contain" />
+               <img src="/insta-icon.png" alt="instagram-icon" />
             </div>
 
             {/* Middle */}
@@ -118,6 +116,7 @@ const Header = ({ fromSigninPage, fromHomePage }: PropsTypes) => {
                            width={100} height={100}
                            layout="responsive"
                            alt="profile"
+                           priority
                            onClick={() => setProfileIconTrigger(prev => !prev)}
                         />
                         {profileIconTrigger && (

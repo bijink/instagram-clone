@@ -41,7 +41,7 @@ const profile: NextPage = () => {
             <div>
                <div className='flex justify-start py-8'>
                   <div className=" mx-5 sm:ml-[4.5rem] sm:mr-[6rem] w-[80px] sm:w-[150px]">
-                     {session && <Image className='rounded-full' layout='responsive' objectFit='contain' src={session.user.image!} width='150' height='150' />}
+                     {session && <Image className='rounded-full' priority layout='responsive' objectFit='contain' src={session.user.image!} width='150' height='150' />}
                   </div>
                   <div className="space-y-5">
                      <div className="flex items-center space-x-5">

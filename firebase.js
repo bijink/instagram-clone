@@ -2,14 +2,16 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
+
 // Firebase configuration
 const firebaseConfig = {
-   apiKey: process.env.FIREBASE_API,
-   authDomain: "insta-clone-app-41f98.firebaseapp.com",
-   projectId: "insta-clone-app-41f98",
-   storageBucket: "insta-clone-app-41f98.appspot.com",
-   messagingSenderId: "473262574046",
-   appId: "1:473262574046:web:dff92af268ec0b8117754f"
+   apiKey: process.env.FIREBASE_API_KEY,
+   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+   projectId: "instagram-clone-80468",
+   storageBucket: "instagram-clone-80468.appspot.com",
+   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+   appId: process.env.FIREBASE_APP_ID,
+   measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
