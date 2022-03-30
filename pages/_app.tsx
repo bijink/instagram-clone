@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
          <Head>
             <title>Instagram Clone</title>
             <link rel="icon" href="/insta-icon_page.webp" />
+            <meta name="google-site-verification" content="2lso2g2eZVCDhFOc_a48HlnXxYoYjdqiHR2U04x5izM" />
          </Head>
          <SessionProvider session={session}>
             <RecoilRoot>
